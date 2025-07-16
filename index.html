@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PIXELPIXEL</title>
+<style>
+  :root {
+    --gap: 24px;
+    --radius: 20px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f9f9f9;
+    color: black;
+    line-height: 1.5;
+  }
+
+
+
+  /* NAVIGATION */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 2rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  }
+
+.nav-left {
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  flex-wrap: wrap;
+}
+
+.brand-name {
+  font-weight: 900;
+  font-size: 2.5rem; /* bigger and bold */
+  letter-spacing: -1px; /* optional for wide look */
+}
+
+.byline {
+  display: block; /* <- forces it onto a new line */
+  font-weight: 550;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  translate: 0.1rem -0.4rem;
+}
+
+
+  .nav-center {
+    display: flex;
+    gap: 2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-center a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-center a:hover {
+    color: black;
+  }
+
+  .nav-right a {
+    text-decoration: none;
+    background: black;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+      transition: color 0.3s ease;
+  }
+
+  .nav-right a:hover {
+    background: #ffeb0f;
+    color: black;
+  }
+
+
+
+  /* ABOUT SECTION */
+  .about-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding: 6rem 0;
+  }
+
+  .about-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.5);
+  }
+
+  .about-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-content {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .about-content h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+
+
+  /* LOGOS SECTION */
+  section#logos {
+    margin: 0;
+    padding: 3rem 1rem;
+    background-color: black;
+  }
+
+  #logos h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+#logos p {
+  color: white;
+  text-align: center;        /* ← center the text */
+  margin: 0 auto 2.5rem;     /* ← center horizontally and add bottom margin */
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  word-wrap: break-word;
+  max-width: 900px;          /* ← control the max width so it doesn’t run too wide */
+}
+
+
+  .about-logos {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .logo-item {
+    text-align: center;
+    flex: 1 1 80px;
+    max-width: 120px;
+  }
+
+  .logo-item img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .logo-item img:hover {
+    opacity: 0.5;
+  }
+
+  .logo-item p {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: white;
+    max-width: 170px;
+    margin-left: auto;
+    margin-right: auto;
+    word-wrap: break-word;
+  }
+
+
+
+
+  /* PROJECTS SECTION */
+  section#projects {
+    padding: 3rem 2rem;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+
+  section#projects h2 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 4rem;
+    font-weight: 800;
+  }
+
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-auto-rows: 1fr;
+    gap: var(--gap);
+    justify-content: center;
+
+  }
+
+  .bento-box {
+    border-radius: var(--radius);
+    height: 300px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    overflow: hidden;
+    cursor: pointer;
+    .bento-box {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), height 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento-box:hover {
+    transform: scale(1.03);
+  }
+
+  .bento-image {
+    height: 65%;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .bento-content {
+    height: 40%;
+    padding: 0.45rem;
+    padding-left: 1rem;
+    background: white;
+    opacity: 1;
+    /* transition: opacity 0.5s ease; */
+  }
+
+  /* .bento-box.minimized .bento-image {
+  opacity: 60%;
+} */
+
+  .bento-title {
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin-bottom: 0.05rem;
+    color: #111;
+  }
+
+    .bento-subtitle {
+    font-size: 1rem;
+    color: #191919;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+
+  .bento-description {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 400;
+  }
+
+  /* Expanded styling */
+  .bento-grid.expanded-mode {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .bento-box.expanded {
+    display: block;
+    width: 100%;
+    height: 700px;
+    margin: 8px;
+    /* order: -1; */
+    /* transition: transform 1s ease, height 1s ease; */
+    transform: scale(1);
+    /* transition: all 5.5s ease; */
+  }
+
+  .bento-box.expanded:hover {
+    transform: none !important;
+  }
+
+  .bento-box.minimized {
+    opacity: 1;
+    width: 22%;
+    height: 300px;
+    margin: 7px;
+    flex: 0 0 auto;
+    transform: scale(1);
+    /* transition: all 0.5s ease; */
+    pointer-events: auto;
+  }
+
+  .bento-box.minimized:hover {
+    transform: scale(1.03);
+
+  }
+
+  .bento-box.minimized .bento-description {
+    display: none;
+  }
+
+  .bento-box.frozen {
+  position: absolute;
+  transition: none !important;
+}
+
+
+
+
+
+
+
+/* SOCAL SECTION */
+  .social-section {
+  text-align: center;
+  padding: 2rem 0rem;
+  height: auto;
+  background: black;
+  font-size: 2.5rem;
+}
+
+.social-section h2 {
+  margin-bottom: 1rem;
+  justify-content: center;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 2rem;
+  margin-left: 1.2rem;
+}
+.social-section h1 {
+  margin-bottom: 2rem;
+  justify-content: center;
+  font-weight: 650;
+  font-size: 29px;
+  color: white;
+  letter-spacing: 0.65rem;
+}
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-links a img {
+  width: 75px;
+  height: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  justify-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.social-links a img:hover {
+  opacity: 0.5;
+}
+
+.social-links p {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: white;
+  max-width: 170px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+  justify-content: center;
+  word-wrap: break-word;
+  }
+.social-links a {
+  text-align: center;
+  text-decoration: none;
+  justify-content: center;
+  width: 80px;
+  justify-content: center;
+  color: rgb(62, 62, 62);          /* force initial color */
+  transition: color 0.4s ease; /* smooth transition on color */
+}
+
+.social-links a:hover {
+  color: rgb(131, 131, 131);
+  text-decoration: none;
+}
+
+
+.social-links a:visited,
+.social-links a:link,
+.social-links a:active {
+  color: white;
+  text-decoration: none;
+}
+
+  footer {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+  }
+
+  footer p {
+    margin-bottom: 0rem;
+    font-size: 0.75rem;
+  }
+
+  footer a {
+    color: white;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+  <!-- NAV -->
+  <nav>
+<div class="nav-left">
+  <span class="brand-name">PIXELPIXEL</span>
+  <div class="byline">by MONA FARROKHI</div>
+</div>
+
+
+    <div class="nav-center">
+      <a href="#about">ABOUT</a>
+      <a href="#projects">PROJECTS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <div class="nav-right">
+      <a href="resume.pdf" download>Download Resume</a>
+    </div>
+  </nav>
+
+
+
+
+
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
+    <video autoplay muted loop playsinline class="about-video">
+      <source src="childish.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="about-inner">
+      <div class="about-content">
+        <h1>A-PIXEL-AT-A-TIME</h1>
+        <p>PIXELPIXEL is the digital identity of
+          <BR>
+          Cross-Disciplinary <BR>
+          Concept Developer & Production Designer,
+        <BR></p>
+        <h1>MONA FARROKHI</h1>
+        <BR>
+        <p>This site is a catalog of ongoing and past projects directed by the artist.</p>
+      </div>
+    </div>
+  </section>
+<BR>
+
+
+
+
+
+  <!-- LOGOS -->
+  <section id="logos" class="logos-section">
+    <h2>KEY SKILLS</h2>
+    <div class="about-logos">
+      <div class="logo-item"><img src="logo03.png" alt="Logo 3"><p>Traditional Mediums</p></div>
+      <div class="logo-item"><img src="logo02.png" alt="Logo 2"><p>Fabrication & Installation</p></div>
+      <div class="logo-item"><img src="logo01.png" alt="Logo 1"><p>Projection & Lighting Design</p></div>
+      <div class="logo-item"><img src="logo04.png" alt="Logo 4"><p>Research & Project Management</p></div>
+      <div class="logo-item"><img src="logo05.png" alt="Logo 5"><p>Node-based Visualization</p></div>
+      <div class="logo-item"><img src="logo06.png" alt="Logo 6"><p>Game Engine & XR Worlds</p></div>
+      <div class="logo-item"><img src="logo07.png" alt="Logo 7"><p>3D Modelling & Rendering</p></div>
+    </div>
+    <p>
+    Combining traditional art methods with advanced digital processes to deliver dynamic, cross-disciplinary projects. 
+    <BR><BR>
+    Led by a versatile art director and project manager experienced in overseeing concept development through final execution, with deep familiarity across multiple creative and technical pipelines.
+
+Work includes traditional mediums such as painting, drawing, and illustrative design. Fabrication and installation projects focus on building physical environments and immersive spatial experiences. Projection and lighting design transform spaces through mapped visuals and precise light integration.
+
+Research and technical development align creative goals with practical execution, covering node-based visualization systems, procedural graphics, and interactive media. 3D modeling and rendering support both physical fabrication and digital simulations. Game engine and XR projects explore real-time, immersive digital worlds.
+    </p>
+
+  </section>
+
+
+
+
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>PROJECTS</h2>
+    <div class="bento-grid" id="bentoGrid">
+      <div class="bento-box">
+        <div class="bento-image" style="background-image: url('NOISE_01.png');"></div>
+        <div class="bento-content">
+          <div class="bento-title">the NOISE</div>
+          <div class="bento-subtitle">2025, MFA Thesis Project</div>
+          <div class="bento-description">description</div>
+        </div>
+      </div>
+      <div class="bento-box">
+        <div class="bento-image" style="background-image: url('image2.jpg');"></div>
+        <div class="bento-content">
+          <div class="bento-title">DOYOUSEEit</div>
+          <div class="bento-subtitle">2024-25, MFA Advancement to Candidacy </div>
+          <div class="bento-description">description</div>
+        </div>
+      </div>
+      <div class="bento-box">
+        <div class="bento-image" style="background-image: url('gozaar_01.png');"></div>
+        <div class="bento-content">
+          <div class="bento-title"><i>Gozaar</i></div>
+             <div class="bento-subtitle">2025, "<i>Who Am I Without You</i>" Exhibit at SJICA</div>
+          <div class="bento-description">Node-based visualization and integrated AI trained model. A study on aging.</div>
+        </div>
+      </div>
+      <div class="bento-box">
+        <div class="bento-image" style="background-image: url('CEV_01.png');"></div>
+        <div class="bento-content">
+          <div class="bento-title">CEV</div>
+          <div class="bento-subtitle">2024, Closed Eyes Visuals Simulation</div>
+          <div class="bento-description">Closed eyes visuals simulation.</div>
+        </div>
+      </div>
+     <div class="bento-box">
+      <div class="bento-image" style="background-image: url('image3.jpg');"></div>
+        <div class="bento-content">
+          <div class="bento-title">Rotunda Concert</div>
+          <div class="bento-subtitle">2024, San Jose City Hall </div>
+          <div class="bento-description">Collaboration with SJSU's AEFG award winning music department symphony prpject. .</div>
+        </div>
+      </div>
+      <div class="bento-box">
+       <div class="bento-image" style="background-image: url('image3.jpg');"></div>
+        <div class="bento-content">
+          <div class="bento-title">MixMedEx</div>
+          <div class="bento-subtitle">2022-Current </div>
+          <div class="bento-description">A series of mixed-media experiments.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- CONNECT -->
+  <section id="contact" class="social-section">
+  <BR>
+  <h2>CONNECT</h2>
+  <h1>PXLPXLX@gmail.com</h1>
+  
+  <div class="social-links">
+    <a href="https://instagram.com/__PIXELPIXEL__" target="_blank"><img src="social01.png" alt="Instagram"><p>Instagram</p></a>
+    <a href="https://linkedin.com/in/mona-farrokhi" target="_blank"><img src="social02.png" alt="LinkedIn"><p>LinkedIn</p></a>
+    <a href="https://github.com/pixelpixelx" target="_blank"><img src="social03.png" alt="Twitter"><p>Github</p></a>
+  </div>
+  <BR>
+</section>
+
+
+
+
+
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p>This website is fully designed and programmed by the author of the work, Mona Farrokhi.</p>
+  </footer>
+
+
+
+
+
+  <!--JavaScript-->
+
+ <script>
+const grid = document.getElementById('bentoGrid');
+const boxes = document.querySelectorAll('.bento-box');
+
+boxes.forEach(box => {
+  box.addEventListener('click', () => {
+    const projectsSection = document.getElementById('projects');
+    const y = projectsSection.getBoundingClientRect().top + window.pageYOffset - 15;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+
+    const currentExpanded = document.querySelector('.bento-box.expanded');
+
+    if (box.classList.contains('expanded')) {
+      // Collapse it completely
+      box.classList.remove('expanded');
+      grid.classList.remove('expanded-mode');
+      boxes.forEach(b => {
+        b.classList.remove('minimized');
+        b.style.order = "";
+      });
+    } else {
+      grid.classList.add('expanded-mode');
+
+      if (currentExpanded) {
+        // Switch directly without resetting minimized
+        currentExpanded.classList.remove('expanded');
+        currentExpanded.classList.add('minimized');
+        currentExpanded.style.order = "";
+
+        box.classList.add('expanded');
+        box.classList.remove('minimized');
+        box.style.order = -1;
+
+      } else {
+        // First time opening
+        box.classList.add('expanded');
+        box.classList.remove('minimized');
+        box.style.order = -1;
+
+        boxes.forEach(b => {
+          if (b !== box) {
+            b.classList.add('minimized');
+            b.classList.remove('expanded');
+            b.style.order = "";
+          }
+        });
+      }
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>
